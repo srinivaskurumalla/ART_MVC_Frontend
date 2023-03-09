@@ -1,0 +1,53 @@
+﻿@model MasterViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center mt-4 mb-5">Details of @Model.CandidateName</h1>
+<a class="btn btn-dark" asp-controller="MasterBR" asp-action="Index">Back to List</a>
+<a class="btn btn-dark" style="margin-left:90%" asp-controller="MasterBR" asp-action="Edit" asp-route-id="@Model.Id">Customize</a>
+
+
+
+<table class="table table-hover table-bordered border-primary m-2">
+    <thead class="bg-info">
+       <tr>
+            <th>Candidate Name</th>
+            <th>Internal/External</th>
+            <th>Location</th>
+            <th>Source</th>
+            <th>Grade</th>
+            <th>Skills Required</th>
+            <th style="width:110px">Screening Date</th>
+            <th>Screening Result</th>
+            <th style="width:110px">L1 Eval Date</th>
+            <th>L1 Eval Result</th>
+            <th style="width:110px">Client Eval Date</th>
+            <th>Client Eval Result</th>
+            <th style="width:110px">Manager Eval Date</th>
+            <th>Manager Eval Result</th>
+            <th>Status</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.CandidateName</td>
+            <td>@Model.Int_Ext</td>
+            <td>@Model.Location</td>
+            <td>@Model.Source</td>
+            <td>@Model.Grade</td>
+            <td>@Model.SkillSetRequired</td>
+            <td>@Model.ScreeningDate.ToShortDateString()</td>
+            <td>@Model.ScreeningResult</td>
+            <td>@Model.L1_Eval_Date.ToShortDateString()</td>
+            <td>@Model.L1_Eval_Result</td>
+            <td>@Model.Client_Eval_Date.ToShortDateString()</td>
+            <td>@Model.Client_Eval_Result</td>
+            <td>@Model.Manager_Eval_Date.ToShortDateString()</td>
+            <td>@Model.Manager_Eval_Result</td>
+            <td>@Model.Status</td>
+        </tr>
+
+    </tbody>
+</table>
