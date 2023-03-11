@@ -38,13 +38,13 @@
             <td>@Model.Source</td>
             <td>@Model.Grade</td>
             <td>@Model.SkillSetRequired</td>
-            <td>@Model.ScreeningDate.ToShortDateString()</td>
+            <td>@Model.ScreeningDate?.ToShortDateString()</td>
             <td>@Model.ScreeningResult</td>
-            <td>@Model.L1_Eval_Date.ToShortDateString()</td>
+            <td>@Model.L1_Eval_Date?.ToShortDateString()</td>
             <td>@Model.L1_Eval_Result</td>
-            <td>@Model.Client_Eval_Date.ToShortDateString()</td>
+            <td>@Model.Client_Eval_Date?.ToShortDateString()</td>
             <td>@Model.Client_Eval_Result</td>
-            <td>@Model.Manager_Eval_Date.ToShortDateString()</td>
+            <td>@Model.Manager_Eval_Date?.ToShortDateString()</td>
             <td>@Model.Manager_Eval_Result</td>
             <td>@Model.Status</td>
         </tr>

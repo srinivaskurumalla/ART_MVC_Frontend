@@ -1,0 +1,101 @@
+﻿@model ProjectViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3 class="mt-5 text-center">Update Project Requirements</h3>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12 offset-2">
+
+            @if (Model != null)
+            {
+
+
+                <div class="col-md-6 align-content-end shadow-lg rounded pl-5 pr-5 pb-3 offset-1">
+
+                    <form asp-controller="ProjectBr" asp-action="Edit" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                        @*                        <input type="hidden" asp-for="UserDetailsId" />
+                    *@
+
+                        <div class="form-group">
+                            <label asp-for="AccountId" class="form-label">Account Name</label>
+                            <br />
+                            <select asp-for="AccountId" class="dropdown btn btn-outline-dark">
+                                <option value="">--Select--</option>
+                                @foreach (var account in Model.AccountViewModels)
+                                {
+                                    <option value="@account.Id">@account.AccountName</option>
+                                }
+                            </select>
+                        <span asp-validation-for="AccountId"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProjectName">Project Name</label>
+                        <input type="text" asp-for="ProjectName" placeholder="Enter Project Name" class="form-control" />
+                        <span asp-validation-for="ProjectName" class="text-bg-danger"></span>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="Grade">Grade</label>
+                        <input type="text" asp-for="Grade" placeholder="Enter Grade" class="form-control" />
+                        <span asp-validation-for="Grade" class="text-bg-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SkillSetRequired" class="form-label">Skills Required:</label><br />
+                        <input type="text" asp-for="SkillSetRequired" placeholder="Enter skills required" class="form-control" />
+                        <span asp-validation-for="SkillSetRequired" class="text-bg-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="No_Of_Positions" class="form-label">Positions Required:</label><br />
+                        <input type="text" asp-for="No_Of_Positions" placeholder="Enter Positions required" class="form-control" />
+                        <span asp-validation-for="No_Of_Positions" class="text-bg-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="form-label">Status:</label><br />
+                        <select asp-for="Status" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="OPEN">OPEN</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CLOSED">CLOSED</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="JobDescription" class="form-label">Job Description:</label><br />
+                        <textarea asp-for="JobDescription" rows="5" class="form-control" placeholder="Enter Job Description"></textarea>
+                        <span asp-validation-for="JobDescription" class="text-bg-danger"></span>
+                    </div>
+
+
+
+                    <br />
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark" value="Add PROJECT">Update Project</button>
+                        <a asp-controller="ProjectBr" asp-action="Index" class="text-start btn btn-warning">Cancel</a>
+
+                    </div>
+
+
+                </form>
+
+                </div>
+            }
+            else
+            {
+                <h2>Data unavailable</h2>
+            }
+        </div>
+    </div>
+</div>
+
+
+

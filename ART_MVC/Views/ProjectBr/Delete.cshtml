@@ -1,0 +1,28 @@
+﻿@model ProjectViewModel
+@{
+    ViewData["Title"] = "Delete";
+ }
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header"><h3 class="text-center">Delete Project</h3></div><div class="card-body">
+                    <img  src="https://cdn.pixabay.com/photo/2012/04/12/22/25/warning-sign-30915__340.png"
+                                                
+                                                 class="" style="margin-left:200px" height="100" width="100" />
+                         <p class="text-center mt-3">
+                        Are you sure you want to delete this Project?
+                    </p>
+                    <div class="d-flex justify-content-around">
+                        <form asp-controller="ProjectBr" asp-action="Delete" method="post">
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                        </form>
+                        <form asp-controller="ProjectBr" asp-action="Index" method="get">
+                            <button type="submit" class="btn btn-danger">No</button>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

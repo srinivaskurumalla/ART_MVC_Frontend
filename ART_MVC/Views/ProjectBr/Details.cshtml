@@ -1,0 +1,43 @@
+﻿@model ProjectViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<h1 class="text-center mt-4 mb-5">Details of @Model.ProjectName</h1>
+<a class="btn btn-dark" asp-controller="ProjectBr" asp-action="Index">Back to List</a>
+<a class="btn btn-dark" style="margin-left:90%" asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@Model.Id">Customize</a>
+
+
+
+<table class="table table-hover table-bordered border-primary m-2">
+    <thead class="bg-info">
+        <tr>
+            <th>Project Name</th>
+            <th>Approved Date</th>
+            <th>Grade</th>
+            <th>No Positions Required</th>
+          
+            <th>Skills Required</th>
+            <th>Status</th>
+            <th>Job Description</th>
+
+        </tr>
+       
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.ProjectName</td>
+            <td>@Model.ApprovedDate.ToShortDateString()</td>
+            <td>@Model.Grade</td>
+            <td>@Model.No_Of_Positions</td>
+           
+            <td>@Model.SkillSetRequired</td>
+          
+            <td>@Model.Status</td>
+            <td>@Model.JobDescription</td>
+        </tr>
+       
+
+    </tbody>
+</table>
