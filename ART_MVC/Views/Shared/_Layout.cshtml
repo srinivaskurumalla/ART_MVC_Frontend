@@ -22,14 +22,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MasterBR" asp-action="Index">MasterBR</a>
                         </li>
-                        <li class="nav-item">
-                            <form asp-controller="Accounts" asp-action="LogOut" method="post">
-                                <input type="submit" class="btn btn-link mb--2 nav-link" value="Sign Out" />
-                            </form>
-                        </li>
+                      
                     </ul>
+                </div>
+                <!-- Render the _Login partial view -->
+                <div id="login-partial">
+                    @await Html.PartialAsync("~/Views/Shared/Components/Login/_LoginPartial.cshtml")
                 </div>
             </div>
         </nav>

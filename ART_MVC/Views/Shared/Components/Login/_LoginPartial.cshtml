@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    var token = Context.Session.GetString("token");
+    var empEmail = Context.Session.GetString("empEmail");
+}
+@if (token != null)
+{
+    <ul class="navbar-nav my-2 my-sm-0">
+        <li class="nav-item">
+            <form asp-controller="ProjectBr" asp-action="AllBRs" method="get">
+                <input type="submit" class="btn btn-link mb--2 nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "ProjectBr" && ViewContext.RouteData.Values["action"].ToString() == "AllBRs") ? "active" : "")" value="AllBRs" />
+            </form>
+        </li>
+        <li class="nav-item">
+            <form asp-controller="ProjectBr" asp-action="Index" method="get">
+                <input type="submit" class="btn btn-link mb--2 nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "ProjectBr" && ViewContext.RouteData.Values["action"].ToString() == "Index") ? "active" : "")" value="My BR's" />
+            </form>
+        </li>
+        <li class="nav-item" style="margin-top: 1px;">
+            <a asp-controller="" asp-action="" class="nav-link">@empEmail</a>
+        </li>
+        <li class="nav-item">
+            <form asp-controller="Accounts" asp-action="LogOut" method="post">
+                <input type="submit" class="btn btn-link mb--2 nav-link" value="Sign Out" />
+            </form>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav my-2 my-sm-0">
+        <li class="nav-item">
+            <form asp-controller="ProjectBr" asp-action="AllBRs" method="get">
+                <input type="submit" class="btn btn-link mb--2 nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "ProjectBr" && ViewContext.RouteData.Values["action"].ToString() == "AllBRs") ? "active" : "")" value="AllBRs" />
+            </form>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Accounts" && ViewContext.RouteData.Values["action"].ToString() == "SignUp") ? "active" : "")" asp-area="" asp-controller="Accounts" asp-action="SignUp">Register</a>
+        </li>
+        <li class="nav-item d-flex">
+            <a class="nav-link @((ViewContext.RouteData.Values["controller"].ToString() == "Accounts" && ViewContext.RouteData.Values["action"].ToString() == "Login") ? "active" : "")" asp-area="" asp-controller="Accounts" asp-action="Login">Login</a>
+        </li>
+    </ul>
+}

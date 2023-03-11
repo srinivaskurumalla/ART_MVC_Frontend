@@ -1,0 +1,114 @@
+﻿@model Proj_Acc_Dto
+@{
+    ViewData["Title"] = "AllBRs";
+    var flag = true;
+}
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+
+<style>
+    .dataTables_scrollHead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    }
+    </style>
+
+</head>
+
+<div class="row mt-5">
+
+    <div class="col-md-2"></div>
+    <div class="col-md-8 mt-4">
+
+
+        <div class="row mt-4">
+
+            <div class="col-2">
+
+                <a asp-controller="Home" asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
+
+            </div>
+          @*  <div class="col-8">
+                <a style="width:auto;margin-left:auto" asp-controller="ProjectBr" asp-action="Create" class="btn btn-dark " style="margin-left:100%">Add new ProjectBR</a>
+            </div>*@
+        </div>
+        <table id="tblAllBRs" class="table table-hover shadow">
+            <thead class="bg-info">
+                <tr>
+
+                    <th>Account Name</th>
+                    <th>Project Name</th>
+                    <th>Project Id</th>
+                    <th>Approved Date</th>
+                    <th>Grade</th>
+                    <th>SkillSet Required</th>
+                    <th>Positions Required</th>
+                    <th>Status</th>
+                  @*  <th>Action</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null)
+                {
+                    flag = false;
+                }
+                @foreach (var item in Model.accountViewModels)
+                {
+
+                    @foreach (var project in Model.projectViewModels)
+                    {
+                        @if (project.AccountId == item.Id)
+                        {
+                            <tr>
+
+                                <td>@item.AccountName</td>
+                                <td>@project.ProjectName</td>
+                                <td>@project.ProjectId</td>
+                                <td>@project.ApprovedDate.ToShortDateString()</td>
+                                <td>@project.Grade</td>
+                                @* <td>@item.AccountViewModel.AccountName</td>*@
+                                <td>@project.SkillSetRequired</td>
+                                <td>@project.No_Of_Positions</td>
+
+                                <td>@project.Status</td>
+                               @* <td>
+                                    <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">Details</a> |
+                                    <a asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@project.Id">Customize</a> |
+                                    <a asp-controller="ProjectBr" asp-action="Delete" asp-route-id="@project.Id">Delete</a>
+                                </td>*@
+
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        @if (!flag)
+        {
+            <h3>NO Records Found!</h3>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script>
+        $(document).ready(function ($) {
+           $(document).ready(function ($) {
+                $('#tblAllBRs').DataTable();
+           
+
+            $('#tblAllBRs').DataTable({
+                 fixedHeader: true
+            });
+            });
+        });
+    </script>
+}
+
+
+

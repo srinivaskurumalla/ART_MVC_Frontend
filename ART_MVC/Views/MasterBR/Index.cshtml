@@ -1,7 +1,11 @@
 ﻿@model List<MasterViewModel>
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
     var flag = true;
+    var token = Context.Session.GetString("token");
+    var empEmail = Context.Session.GetString("empEmail");
+}
 }
 
 
@@ -9,7 +13,7 @@
 
 
 <div class="row mt-5">
-   
+
     <div class="col-md-2"></div>
     <div class="col-md-8 mt-4">
         <a asp-controller="Home" asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
@@ -20,9 +24,14 @@
                 </div>
                 <h3 class="mt-4">Master BR Page</h3>
             </div>
-            <div class="col text-end">
-                <a asp-controller="MasterBR" asp-action="Create" class="btn btn-dark">Add new Candidate</a>
-            </div>
+            @if (empEmail != null)
+            {
+
+
+                <div class="col text-end">
+                    <a asp-controller="MasterBR" asp-action="Create" class="btn btn-dark">Add new Candidate</a>
+                </div>
+            }
         </div>
         <div class="row">
             <table class="table table-hover shadow">
@@ -32,7 +41,11 @@
                         <th>Internal/External</th>
                         <th>Status</th>
                         <th>Location</th>
-                        <th>Action</th>
+                        @if (empEmail != null)
+                        {
+
+                            <th>Action</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -49,11 +62,15 @@
                             <td>@item.Int_Ext</td>
                             <td>@item.Status</td>
                             <td>@item.Location</td>
-                            <td>
-                                <a asp-controller="MasterBR" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-controller="MasterBR" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
-                                <a asp-controller="MasterBR" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                            @if (empEmail != null)
+                            {
+
+                                <td>
+                                    <a asp-controller="MasterBR" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-controller="MasterBR" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
+                                    <a asp-controller="MasterBR" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            }
 
                         </tr>
 

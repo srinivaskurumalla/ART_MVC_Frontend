@@ -95,7 +95,7 @@ namespace ART_MVC.Controllers
                         string email = login.Email;
                         HttpContext.Session.SetString("empEmail", email);
 
-                        return RedirectToAction("Index", "ProjectBr");
+                        return RedirectToAction("Navigate", "Home");
                         // TempData["UserName"] = login.Username;
                       
                     }

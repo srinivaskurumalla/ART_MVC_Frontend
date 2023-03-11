@@ -20,6 +20,44 @@ namespace ART_MVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> AllBRs()
+        {
+            Proj_Acc_Dto proj_Acc_Dto = new();
+            List<ProjectViewModel> projectViewModels = new();
+            List<AccountViewModel> accountViewModels = new();
+           // SignUpViewModel signUpViewModel = new();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+
+                var result = await client.GetAsync("ProjectsBR/GetAllProjectBRs");
+                var allAccounts = await client.GetAsync("AccountsBR/GetAllAccBRs");
+               // string empEmail = HttpContext.Session.GetString("empEmail");
+               // var loggedInEmp = await client.GetAsync($"Accounts/GetEmpId/{empEmail}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    projectViewModels = await result.Content.ReadAsAsync<List<ProjectViewModel>>();
+                    accountViewModels = await allAccounts.Content.ReadAsAsync<List<AccountViewModel>>();
+
+                }
+              /*  signUpViewModel = await loggedInEmp.Content.ReadAsAsync<SignUpViewModel>();
+
+                if (signUpViewModel == null)
+                {
+                    return RedirectToAction("Index", "Error");
+                }*/
+               // projectViewModels = projectViewModels.Where(p => p.EmployeeId == signUpViewModel.Id).ToList();
+                proj_Acc_Dto.projectViewModels = projectViewModels;
+                proj_Acc_Dto.accountViewModels = accountViewModels;
+
+
+            }
+
+            return View(proj_Acc_Dto);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             Proj_Acc_Dto proj_Acc_Dto = new();
