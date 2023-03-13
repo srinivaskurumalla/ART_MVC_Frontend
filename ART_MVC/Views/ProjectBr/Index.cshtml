@@ -22,7 +22,7 @@
 
             </div>
             <div class="col-8" >
-                <a style="width:auto;margin-left:auto" asp-controller="ProjectBr" asp-action="Create" class="btn btn-dark " style="margin-left:100%">Add new ProjectBR</a>
+                <a style="width:auto;margin-left:auto" asp-controller="ProjectBr" asp-action="Create" asp-route-id="@Model.ProjectId" class="btn btn-dark " style="margin-left:100%">Add new ProjectBR</a>
             </div>
         </div>
             <table class="table table-hover shadow ">
@@ -32,11 +32,8 @@
                         <th>Account Name</th>
                         <th>Project Name</th>
                         <th>Project Id</th>
-                        <th>Approved Date</th>
-                        <th>Grade</th>
-                        <th>SkillSet Required</th>
-                        <th>Positions Required</th>
-                        <th>Status</th>
+                        <th>Total Positions required</th>
+                        
                         <th >Action </th>
                     </tr>
                 </thead>
@@ -58,15 +55,16 @@
                                     <td>@project.ProjectName</td>
 @*                                    <td>@project.ProjectId</td>
                     *@
-                                <td> <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">@project.ProjectId</a> </td>
+                                <td> <a asp-controller="Domain" asp-action="Index" asp-route-id="@project.Id">@project.ProjectId</a> </td>
 
-                                    <td>@project.ApprovedDate.ToShortDateString()</td>
+                                   @* <td>@project.ApprovedDate.ToShortDateString()</td>
                                     <td>@project.Grade</td>
-                                    @* <td>@item.AccountViewModel.AccountName</td>*@
+                                     <td>@item.AccountViewModel.AccountName</td>
                                     <td>@project.SkillSetRequired</td>
                                     <td>@project.No_Of_Positions</td>
 
-                                    <td>@project.Status</td>
+                                    <td>@project.Status</td>*@
+                                    <td>@project.Total_Positions</td>
                                    <td>
                                         <div>
                                             <a asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@project.Id">Customize</a> |          

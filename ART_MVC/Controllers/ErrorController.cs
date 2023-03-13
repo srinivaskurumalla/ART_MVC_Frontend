@@ -8,5 +8,10 @@ namespace ART_MVC.Controllers
         {
             return View();
         }
+        public IActionResult ProjectDeleteError()
+        {
+            int? projectId =  @ViewBag.projectDeleteId;
+            return View(projectId);
+        }
     }
 }

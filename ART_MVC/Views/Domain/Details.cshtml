@@ -1,4 +1,8 @@
-﻿@model ProjectViewModel
+﻿@model DomainViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
 @using Microsoft.AspNetCore.Http;
 
 @{
@@ -15,7 +19,7 @@
 
 
     <div class="col text-end">
-        <a class="btn btn-dark" style="margin-left:90%" asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@Model.Id">Customize</a>
+        <a class="btn btn-dark" style="margin-left:90%" asp-controller="Domain" asp-action="Edit" asp-route-id="@Model.Id">Customize</a>
     </div>
 }
 
@@ -40,7 +44,7 @@
     <tbody>
         <tr>
             <td>@Model.ProjectName</td>
-          @*  <td>@Model.ApprovedDate.ToShortDateString()</td>
+              <td>@Model.ApprovedDate.ToShortDateString()</td>
             <td>@Model.Grade</td>
             <td>@Model.No_Of_Positions</td>
             <td>@Model.Age</td>
@@ -48,9 +52,10 @@
             <td>@Model.SkillSetRequired</td>
 
             <td>@Model.Status</td>
-            <td>@Model.JobDescription</td>*@
+            <td>@Model.JobDescription</td>
         </tr>
 
 
     </tbody>
 </table>
+

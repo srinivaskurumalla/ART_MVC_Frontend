@@ -2,7 +2,13 @@
 @{
     ViewData["Title"] = "Create";
 }
-
+<head>
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+</head>
   <h3 class="mt-5 text-center">Add Project Requirements</h3>
 
 <div class="container mt-3">
@@ -13,11 +19,11 @@
             <div class="col-md-6 align-content-end shadow-lg rounded pl-5 pr-5 pb-3 offset-1">
               
                 <form asp-controller="ProjectBr" asp-action="Create" method="post">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
                                             <input type="hidden" asp-for="EmployeeId" />
-                    
+                  
 
                     <div class="form-group">
                         <label asp-for="AccountId" class="form-label">Account Name</label>
@@ -39,7 +45,7 @@
                     </div>
                  
                   
-                    <div class="form-group">
+                @*    <div class="form-group">
                         <label asp-for="Grade">Grade</label>
                         <input type="text" asp-for="Grade" placeholder="Enter Grade" class="form-control" />
                         <span asp-validation-for="Grade" class="text-bg-danger"></span>
@@ -58,8 +64,8 @@
                                 <option value="CLOSED">CLOSED</option>
                            
                             </select>
-                    </div>
-                      <div class="form-group">
+                    </div>*@
+                   @*   <div class="form-group">
                         <label asp-for="JobDescription" class="form-label">Job Description:</label><br />
                         <textarea asp-for="JobDescription" rows="5" class="form-control" placeholder="Enter Job Description"></textarea>
                         <span asp-validation-for="JobDescription" class="text-bg-danger"></span>
@@ -69,7 +75,18 @@
                         <input type="text" asp-for="No_Of_Positions" placeholder="Enter number of positions required" class="form-control" />
                         <span asp-validation-for="No_Of_Positions" class="text-bg-danger"></span>
                     </div>
-                  
+
+                      <div class="form-group">
+                         <label asp-for="ApprovedDate" class="form-label">Approved Date:</label><br />
+                        <input type="date" asp-for="ApprovedDate" placeholder="Select Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="ApprovedDate" class="text-bg-danger"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="EmployeeName">Added_Modified By</label>
+                        <input type="text" asp-for="EmployeeName" placeholder="Enter Project Name" class="form-control" readonly/>
+                        <span asp-validation-for="EmployeeName" class="text-bg-danger"></span>
+
+                    </div>
 
                     <br />
 
@@ -87,5 +104,10 @@
     </div>
 </div>
 
+@section Scripts{
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
 

@@ -20,6 +20,35 @@
 
     <div class="col-md-2"></div>
     <div class="col-md-8 mt-4">
+        <form asp-controller="ProjectBr" asp-action="AllBRs" method="post" class="mb-5">
+            <div class="row">
+                <div class="form-group">
+                    <label asp-for="Status" class="form-label">Select Status:</label>
+                    <select name="status" asp-for="Status" asp-items="Model.Values" onchange="this.form.submit()" class="dropdown btn btn-outline-dark">
+                        <option value="">--Select--</option>
+                      
+
+                    </select>
+                </div>
+
+              @*  <div class="form-group">
+                            <label asp-for="ProjectId" class="form-label">Project Name</label>
+                           
+                            <select name="projectId" asp-for="ProjectId" class="dropdown btn btn-outline-dark">
+                                <option value="">--Select--</option>
+                            @foreach (var project in Model.projectViewModels)
+                            {
+                                <option value="@project.ProjectId">@project.ProjectName</option>
+                            }
+                            </select>
+                            <span asp-validation-for="ProjectId"></span>
+                        </div>*@
+                <div class="col-2">
+                    <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
+
+                </div>
+            </div>
+        </form>
 
 
         <div class="row mt-4">
@@ -64,14 +93,14 @@
 
                                 <td>@item.AccountName</td>
                                 <td>@project.ProjectName</td>
-                                <td>@project.ProjectId</td>
-                                <td>@project.ApprovedDate.ToShortDateString()</td>
-                                <td>@project.Grade</td>
-                                @* <td>@item.AccountViewModel.AccountName</td>*@
+                                <td> <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">@project.ProjectId</a> </td>
+                               @* <td>@project.ApprovedDate.ToShortDateString()</td>*@
+                              @*  <td>@project.Grade</td>
+                                 <td>@item.AccountViewModel.AccountName</td>
                                 <td>@project.SkillSetRequired</td>
                                 <td>@project.No_Of_Positions</td>
 
-                                <td>@project.Status</td>
+                                <td>@project.Status</td>*@
                                @* <td>
                                     <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">Details</a> |
                                     <a asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@project.Id">Customize</a> |

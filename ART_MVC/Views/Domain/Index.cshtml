@@ -1,16 +1,23 @@
-﻿@model List<MasterViewModel>
+﻿@model List<DomainViewModel>
 @using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
     var flag = true;
     var token = Context.Session.GetString("token");
     var empEmail = Context.Session.GetString("empEmail");
+    int projectId = 0;
+    if (ViewContext.RouteData.Values["id"] != null && ViewContext.RouteData.Values["id"].ToString() != null)
+    {
+        projectId = int.Parse(ViewContext.RouteData.Values["id"].ToString());
+    }
+
+
 }
-}
 
 
 
 
+<h2 class="text-center mt-4 mb-5">@ViewBag.projectName</h2>
 
 <div class="row mt-5">
 
@@ -22,14 +29,14 @@
             <div class="col">
                 <div class="col text-end">
                 </div>
-                <h3 class="mt-4">Master BR Page</h3>
+                <h3 class="mt-4">Domain Index</h3>
             </div>
             @if (empEmail != null)
             {
 
 
                 <div class="col text-end">
-                    <a asp-controller="MasterBR" asp-action="Create" class="btn btn-dark">Add new Candidate</a>
+                    <a asp-controller="Domain" asp-action="Create" asp-route-projectId="@projectId" class="btn btn-dark">Add new Domain</a>
                 </div>
             }
         </div>
@@ -37,11 +44,11 @@
             <table class="table table-hover shadow">
                 <thead>
                     <tr>
-                        <th>Candidate Id</th>
-                        <th>Candidate Name</th>
-                        <th>Internal/External</th>
+                       
+                        <th>Domain Name</th>
+                       
                         <th>Status</th>
-                        <th>Location</th>
+                        <th>Positions Required</th>
                         @if (empEmail != null)
                         {
 
@@ -59,18 +66,18 @@
 
 
                         <tr>
-                            <td>@item.CandidateId</td>
-                            <td>@item.CandidateName</td>
-                            <td>@item.Int_Ext</td>
+                           
+                            <td>@item.DomainName</td>
+                           
                             <td>@item.Status</td>
-                            <td>@item.Location</td>
+                            <td>@item.No_Of_Positions</td>
                             @if (empEmail != null)
                             {
 
                                 <td>
-                                    <a asp-controller="MasterBR" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-controller="MasterBR" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
-                                    <a asp-controller="MasterBR" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <a asp-controller="Domain" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-controller="Domain" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
+                                    <a asp-controller="Domain" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 </td>
                             }
 

@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Create";
 }
+<head>
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+   
+    </style>
+</head>
 
 
 <div class="container">
@@ -12,11 +20,13 @@
                 <div class="col-md-6 align-content-end shadow-lg rounded pl-5 pr-5 pb-3 offset-1">
                     <h4 class="card-header-pills">Add Candidate Details</h4>
                     <form asp-controller="MasterBR" asp-action="Create" method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
 @*                        <input type="hidden" asp-for="UserDetailsId" />
 *@
+                    <input type="hidden" asp-for="EmployeeId" />
+
 
                         <div class="form-group">
                             <label asp-for="ProjectId" class="form-label">Project Name</label>
@@ -38,66 +48,50 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Int_Ext">Internal/External</label>
-                            <input type="text" asp-for="Int_Ext" placeholder="Internal/External" class="form-control" />
+                             <select asp-for="Int_Ext" class="dropdown btn btn-outline-dark">
+                                <option value="">--Select--</option>
+                                <option value="INERNAL">INTERNAL</option>
+                                <option value="EXTERNAL">EXTERNAL</option>
+                            </select>
                             <span asp-validation-for="Int_Ext" class="text-bg-danger"></span>
 
                         </div>
-                        @*  <div class="form-group">
-                        <label asp-for="CityId">City</label>
-                        <input type="text" asp-for="CityId" placeholder="City Id" class="form-control" />
-                        <span asp-validation-for="CityId" class="text-bg-danger"></span>
-
-                        </div>*@
-
-
-                        @* testing of city and states*@
-                        @*  <label for="states">States:</label>
-                        <select id="states" class="form-control">
-                        <option value="">--Select State--</option>
-                        @foreach (var state in Model.StateViewModels.Distinct())
-                        {
-                        <option value="@state.Id">@state.StateName</option>
-                        }
-                        </select>
-                        <label for="cities">Cities:</label>
-                        <select id="cities" name="cityId" class="form-control"></select>
-                        *@
-                        @*  <div class="form-group">
-                        <label for="cities">Cities:</label>
-                        <select id="cities" class="form-control" disabled="disabled">
-                        <option value="">--Select City--</option>
-                        </select>
-                        </div>*@
-
-                      @*  <label asp-for="CityId">City</label>
-                        <select id="genre-dropdown" name="cityId" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
-                            <option value="">--Select--</option>
-                            @foreach (var city in Model.CityViewModels.Distinct())
-                            {
-                                <option value="@city.Id">@city.CityName</option>
-                            }
-                        </select>*@
-
+                    
                         <div class="form-group">
                             <label asp-for="Location">Location</label>
-                            <input type="text" asp-for="Location" placeholder="Enter Location" class="form-control" />
-                            <span asp-validation-for="Location" class="text-bg-danger"></span>
+                        <select asp-for="Location" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="HYDERABAD">HYDERABAD</option>
+                            <option value="BANGALORE">BANGALORE</option>
+                            <option value="VIZAG">VIZAG</option>
+                            <option value="CHENNAI">CHENNAI</option>
+                            <option value="NOIDA">NOIDA</option>
+                        </select>                          
+                        <span asp-validation-for="Location" class="text-bg-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Source">Source</label>
-                            <input type="text" asp-for="Source" placeholder="Enter Region" class="form-control" />
-                            <span asp-validation-for="Source" class="text-bg-danger"></span>
+                        <select asp-for="Source" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="Naukari">Naukari</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="TAG">TAG</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>    
+                        <span asp-validation-for="Source" class="text-bg-danger"></span>
                         </div>
-                        @*  <div class="mb-2">
-                        <label asp-for="UploadDate" class="form-label"></label>
-                        <input type="date" asp-for="UploadDate" class="form-control" />
-                        <span asp-validation-for="UploadDate"></span>
-                        </div>*@
+                    
                         <div class="form-group">
                             <label asp-for="Grade">Grade</label>
-                            <input type="text" asp-for="Grade" placeholder="Enter Grade" class="form-control" />
-                            <span asp-validation-for="Grade" class="text-bg-danger"></span>
+                        <select asp-for="Grade" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+                        </select>      
+                        <span asp-validation-for="Grade" class="text-bg-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="SkillSetRequired" class="form-label">Skills Required:</label><br />
@@ -152,7 +146,7 @@
 
                         <div class="form-group">
                             @*<input type="submit" class="=btn btn-dark float-right" value="Add Property" />*@
-                            <button type="submit" class="btn btn-dark" value="Add Candidate">Add Candidate</button>
+                            <button type="submit" class="btn btn-dark" onclick="" value="Add Candidate">Add Candidate</button>
                         </div>
 
 
@@ -164,3 +158,10 @@
     </div>
 
 
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+  
+}

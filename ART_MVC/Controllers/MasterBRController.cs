@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ namespace ART_MVC.Controllers
                 {
                     masterViewModels = await result.Content.ReadAsAsync<List<MasterViewModel>>();
                 }
+               
             }
             return View(masterViewModels);
         }
@@ -42,19 +44,25 @@ namespace ART_MVC.Controllers
         {
             MasterViewModel masterViewModel = new();
             List<ProjectViewModel> projectViewModels = new();
+            SignUpViewModel signUpViewModel = new();
+            string empEmail = HttpContext.Session.GetString("empEmail");
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var result = await client.GetAsync("ProjectsBR/GetAllProjectBRs");
+                var loggedInEmp = await client.GetAsync($"Accounts/GetEmpId/{empEmail}");
 
                 if (result.IsSuccessStatusCode)
                 {
                     projectViewModels = await result.Content.ReadAsAsync<List<ProjectViewModel>>();
+                    signUpViewModel = await loggedInEmp.Content.ReadAsAsync<SignUpViewModel>();
+
                 }
             }
             masterViewModel.ProjectViewModels= projectViewModels;
+            masterViewModel.EmployeeId = signUpViewModel.Id;
 
             return View(masterViewModel);
         }
@@ -136,6 +144,9 @@ namespace ART_MVC.Controllers
 
                         //  movie.Genres = await this.GetGenres();
                         masterViewModel.ProjectViewModels = await projects.Content.ReadAsAsync<List<ProjectViewModel>>();
+                        masterViewModel.CandidateId = masterViewModel.CandidateId;
+                        masterViewModel.EmployeeId = masterViewModel.EmployeeId;
+                        masterViewModel.EmployeeName= masterViewModel.EmployeeName;
                         return View(masterViewModel);
                     }
                     else

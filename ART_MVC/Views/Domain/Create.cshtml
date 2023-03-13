@@ -1,0 +1,124 @@
+﻿@model DomainViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+<head>
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 offset-1">
+
+
+            <div class="col-md-6 align-content-end shadow-lg rounded pl-5 pr-5 pb-3 offset-1">
+                <h4 class="card-header-pills">Add Domain Details</h4>
+                <form asp-controller="Domain" asp-action="Create" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                    @*                        <input type="hidden" asp-for="UserDetailsId" />
+                    *@
+                    <input type="hidden" asp-for="EmployeeId" />
+                    <input type="hidden" asp-for="ProjectFkId" />
+                    <input type="hidden" asp-for="ProjectName" />
+
+
+                 @*   <div class="form-group">
+                        <label asp-for="ProjectId" class="form-label">Project Name</label>
+                        <br />
+                        <select asp-for="ProjectId" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            @foreach (var project in Model.ProjectViewModels)
+                            {
+                                <option value="@project.Id">@project.ProjectName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ProjectId"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="DomainName">Domain Name</label>
+                        <input type="text" asp-for="DomainName" placeholder="Enter Name" class="form-control" />
+                        <span asp-validation-for="DomainName" class="text-bg-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SkillSetRequired">Extra Skills Required</label>
+                        <input type="text" asp-for="SkillSetRequired" placeholder="Extra Skills Required" class="form-control" />
+                        <span asp-validation-for="SkillSetRequired" class="text-bg-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status">Status</label>
+                        <select asp-for="Status" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="OPEN">OPEN</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CLOSED">CLOSED</option>
+                           
+                        </select>           
+                        <span asp-validation-for="Status" class="text-bg-danger"></span>
+                    </div>
+                  
+                    <div class="form-group">
+                        <label asp-for="Grade">Grade</label>
+                        <select asp-for="Grade" class="dropdown btn btn-outline-dark">
+                            <option value="">--Select--</option>
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+                           
+                        </select>
+                        <span asp-validation-for="Grade" class="text-bg-danger"></span>
+                    </div>
+                
+
+                    <div class="form-group">
+                        <label asp-for="ApprovedDate" class="form-label">Approved Date:</label><br />
+                        <input type="date" asp-for="ApprovedDate" placeholder="Approved Date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="ApprovedDate" class="text-bg-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="No_Of_Positions" class="form-label">Positions Required :</label><br />
+                        <input type="text" asp-for="No_Of_Positions" placeholder="postions required" class="form-control" />
+                        <span asp-validation-for="No_Of_Positions" class="text-bg-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="JobDescription" class="form-label">Enter Job Description :</label><br />
+                        <textarea rows="5" asp-for="JobDescription" class="form-control" placeholder="Enter Job Description">@Model.JobDescription</textarea>
+                        <span asp-validation-for="JobDescription" class="text-bg-danger"></span>
+                    </div>
+                  
+
+                  
+                    <br />
+
+                    <div class="form-group">
+                        @*<input type="submit" class="=btn btn-dark float-right" value="Add Property" />*@
+                        <button type="submit" class="btn btn-dark" value="Add Domain">Add Domain</button>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
+
