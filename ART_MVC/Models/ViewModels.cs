@@ -34,15 +34,20 @@ namespace ART_MVC.Models
 
         public string JobDescription { get; set; }
         public int Age { get; set; }
-
+        [Required]
         public DateTime? ScreeningDate { get; set; } 
         public string ScreeningResult { get; set; }
+
+       // [GreaterThan(nameof(ScreeningDate), ErrorMessage = "L1_Eval_Date must be greater than Screening Date")]
 
         public DateTime? L1_Eval_Date { get; set; } 
         public string L1_Eval_Result { get; set; }
 
+      //  [GreaterThan(nameof(L1_Eval_Date), ErrorMessage = "Client_Eval_Date must be greater than L1_Eval_Date")]
+
         public DateTime? Client_Eval_Date { get; set; } 
         public string Client_Eval_Result { get; set; }
+      //  [GreaterThan(nameof(Client_Eval_Date), ErrorMessage = "Manager_Eval_Date must be greater than Client_Eval_Date")]
 
         public DateTime? Manager_Eval_Date { get; set; } 
         public string Manager_Eval_Result { get; set; }
@@ -192,6 +197,44 @@ namespace ART_MVC.Models
 
         [Required(ErrorMessage = "please enter your password")]
         public string Password { get; set; }
+    }
+
+
+    public class GreaterThanAttribute : ValidationAttribute
+    {
+        private readonly string _comparisonProperty;
+
+        public GreaterThanAttribute(string comparisonProperty)
+        {
+            _comparisonProperty = comparisonProperty;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var property = validationContext.ObjectType.GetProperty(_comparisonProperty);
+            if (property == null)
+            {
+                return new ValidationResult($"Unknown property: {_comparisonProperty}");
+            }
+
+            var comparisonValue = property.GetValue(validationContext.ObjectInstance);
+            if (comparisonValue == null || !(comparisonValue is IComparable))
+            {
+                return ValidationResult.Success;
+            }
+
+            if (value == null || !(value is IComparable))
+            {
+                return ValidationResult.Success;
+            }
+
+            if (((IComparable)value).CompareTo(comparisonValue) <= 0)
+            {
+                return new ValidationResult($"{validationContext.DisplayName} must be greater than {_comparisonProperty}.");
+            }
+
+            return ValidationResult.Success;
+        }
     }
 
 }
