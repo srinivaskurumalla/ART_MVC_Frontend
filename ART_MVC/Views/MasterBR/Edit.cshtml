@@ -134,12 +134,24 @@
                         <input type="text" asp-for="Manager_Eval_Result" placeholder="Enter Manager Evaluation Result" class="form-control" />
                         <span asp-validation-for="Manager_Eval_Result" class="text-bg-danger"></span>
                     </div>
+                    <div class="form-group">
+                       
+                            <label asp-for="Status">Status</label>
+                            <select asp-for="Status" class="dropdown btn btn-outline-dark">
+                                <option value="">--Select--</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="SELECTED">SELECTED</option>
+                                <option value="REJECTED">REJECTED</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-bg-danger"></span>
+                        </div>                        
 
                     <br />
 
                     <div class="form-group">
                         @*<input type="submit" class="=btn btn-dark float-right" value="Add Property" />*@
                         <button type="submit" class="btn btn-dark" value="Update Candidate Details">Update Candidate Details</button>
+                        <a asp-controller="MasterBR" asp-action="Index" class="text-start btn btn-warning">Cancel</a>
                     </div>
 
 

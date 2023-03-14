@@ -22,39 +22,49 @@ namespace ART_MVC.Controllers
         }
 
       //  [HttpGet]
-        public async Task<IActionResult> AllBRs([FromForm] string? projectId, [FromForm] string status = "All")
+        public async Task<IActionResult> AllBRs()
         {
-            Status = status;
+          //  Status = status;
             Proj_Acc_Dto proj_Acc_Dto = new();
             List<ProjectViewModel> projectViewModels = new();
             List<AccountViewModel> accountViewModels = new();
-           // SignUpViewModel signUpViewModel = new();
+            List<SignUpViewModel> signUpViewModels = new();
+            List<DomainViewModel> domainViewModels = new();
+
+            // SignUpViewModel signUpViewModel = new();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var result = await client.GetAsync("ProjectsBR/GetAllProjectBRs");
                 var allAccounts = await client.GetAsync("AccountsBR/GetAllAccBRs");
-               // string empEmail = HttpContext.Session.GetString("empEmail");
-               // var loggedInEmp = await client.GetAsync($"Accounts/GetEmpId/{empEmail}");
+                // string empEmail = HttpContext.Session.GetString("empEmail");
+                // var loggedInEmp = await client.GetAsync($"Accounts/GetEmpId/{empEmail}");
+                var allEmployees = await client.GetAsync("Accounts/GetAllEmployees");
+                var allDomains = await client.GetAsync("Domains/GetAllDomains");
+
 
                 if (result.IsSuccessStatusCode)
                 {
                     projectViewModels = await result.Content.ReadAsAsync<List<ProjectViewModel>>();
                     accountViewModels = await allAccounts.Content.ReadAsAsync<List<AccountViewModel>>();
+                    signUpViewModels = await allEmployees.Content.ReadAsAsync<List<SignUpViewModel>>();
+                    domainViewModels = await allDomains.Content.ReadAsAsync<List<DomainViewModel>>();
+
 
                 }
-              /*  signUpViewModel = await loggedInEmp.Content.ReadAsAsync<SignUpViewModel>();
+                /*  signUpViewModel = await loggedInEmp.Content.ReadAsAsync<SignUpViewModel>();
 
-                if (signUpViewModel == null)
-                {
-                    return RedirectToAction("Index", "Error");
-                }*/
-               // projectViewModels = projectViewModels.Where(p => p.EmployeeId == signUpViewModel.Id).ToList();
+                  if (signUpViewModel == null)
+                  {
+                      return RedirectToAction("Index", "Error");
+                  }*/
+                // projectViewModels = projectViewModels.Where(p => p.EmployeeId == signUpViewModel.Id).ToList();
                 proj_Acc_Dto.projectViewModels = projectViewModels;
                 proj_Acc_Dto.accountViewModels = accountViewModels;
+                proj_Acc_Dto.SignUpViewModels = signUpViewModels;
 
-                if (result.IsSuccessStatusCode && status != "All")
+               /* if (result.IsSuccessStatusCode && status != "All")
                 {
                     proj_Acc_Dto.projectViewModels =  projectViewModels.Where(p => p.ProjectId == projectId).ToList();
                     if(status != null)
@@ -62,14 +72,17 @@ namespace ART_MVC.Controllers
                        // proj_Acc_Dto.projectViewModels = projectViewModels.Where(p => p.Status == status).ToList();
 
                     }
-                }
+                }*/
             }
 
             Proj_Acc_Dto proj_Acc_Dto1 = new Proj_Acc_Dto
             {
                 accountViewModels = proj_Acc_Dto.accountViewModels,
                 projectViewModels = proj_Acc_Dto.projectViewModels,
-                ProjectId = projectId,
+                SignUpViewModels=proj_Acc_Dto.SignUpViewModels,
+
+
+              //  ProjectId = projectId,
                 Values = new List<SelectListItem>
                 {
                     new SelectListItem { Value = "All", Text = "All" },
@@ -77,9 +90,18 @@ namespace ART_MVC.Controllers
                     new SelectListItem { Value = "CLOSED", Text = "CLOSED" },
                     new SelectListItem { Value = "PENDING", Text = "PENDING" },
                 }
+
                 
 
             };
+
+            foreach (ProjectViewModel project in projectViewModels)
+            {
+                var matchingDomains = domainViewModels.Where(d => d.ProjectFkId == project.Id && d.No_Of_Positions >= 0).ToList();
+                // Console.WriteLine($"Matching domains for project {project.Id}: {matchingDomains.Count}");
+                project.Total_Positions = matchingDomains.Sum(d => d.No_Of_Positions);
+            }
+
             return View(proj_Acc_Dto1);
         }
 
@@ -120,7 +142,7 @@ namespace ART_MVC.Controllers
                 foreach (ProjectViewModel project in projectViewModels)
                 {
                     var matchingDomains = domainViewModels.Where(d => d.ProjectFkId == project.Id && d.No_Of_Positions >= 0).ToList();
-                    Console.WriteLine($"Matching domains for project {project.Id}: {matchingDomains.Count}");
+                   // Console.WriteLine($"Matching domains for project {project.Id}: {matchingDomains.Count}");
                     project.Total_Positions = matchingDomains.Sum(d => d.No_Of_Positions);
                 }
 
@@ -208,6 +230,8 @@ namespace ART_MVC.Controllers
                     }
                 }
             }
+            ModelState.AddModelError("", "Project Name already added by some other , please add other project");
+
             ProjectViewModel projectView = new ProjectViewModel
             {
                 AccountViewModels = accountViewModels

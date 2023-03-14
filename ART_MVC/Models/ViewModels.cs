@@ -144,6 +144,7 @@ namespace ART_MVC.Models
     public class Proj_Acc_Dto
     {
       public  List<ProjectViewModel> projectViewModels { get; set; }
+      public  List<SignUpViewModel> SignUpViewModels { get; set; }
        public List<AccountViewModel> accountViewModels
         {
             get; set;

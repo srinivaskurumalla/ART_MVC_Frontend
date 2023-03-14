@@ -195,9 +195,15 @@ namespace ART_MVC.Controllers
                 return View();
             }
 
-            [HttpPost]
-            public async Task<IActionResult> Edit(MasterViewModel masterViewModel)
+        [HttpPost]
+        public async Task<IActionResult> Edit(MasterViewModel masterViewModel)
+        {
+            string empEmail = HttpContext.Session.GetString("empEmail");
+
+            if (empEmail != null)
             {
+
+
                 if (ModelState.IsValid)
                 {
                     using (var client = new HttpClient())
@@ -221,6 +227,11 @@ namespace ART_MVC.Controllers
                 //};
                 return View(masterViewModel);
             }
+            else
+            {
+                return RedirectToAction("Index", "Error");
+            }
+        }
 
             [HttpGet]
             public async Task<IActionResult> Delete(int id)
