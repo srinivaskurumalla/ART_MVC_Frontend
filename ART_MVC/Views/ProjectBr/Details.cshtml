@@ -40,8 +40,8 @@
     <tbody>
         <tr>
             <td>@Model.ProjectName</td>
-          @*  <td>@Model.ApprovedDate.ToShortDateString()</td>
-            <td>@Model.Grade</td>
+          <td>@Model.ApproveDate?.ToShortDateString()</td>
+            @*  <td>@Model.Grade</td>
             <td>@Model.No_Of_Positions</td>
             <td>@Model.Age</td>
 

@@ -23,20 +23,25 @@ namespace ART_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             List<MasterViewModel> masterViewModels = new();
+            List<ProjectViewModel> projectViewModels = new();
 
+            Master_Project_Dto master_Project_Dto = new();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var result = await client.GetAsync("MasterBR/GetAllMasterBRs");
+                var allProjects = await client.GetAsync("ProjectsBR/GetAllProjectBRs");
 
                 if (result.IsSuccessStatusCode)
                 {
                     masterViewModels = await result.Content.ReadAsAsync<List<MasterViewModel>>();
+                    projectViewModels = await allProjects.Content.ReadAsAsync<List<ProjectViewModel>>();
                 }
-
+                master_Project_Dto.MasterViewModels= masterViewModels;
+                master_Project_Dto.ProjectViewModels= projectViewModels;
             }
-            return View(masterViewModels);
+            return View(master_Project_Dto);
         }
 
         [HttpGet]
@@ -130,6 +135,10 @@ namespace ART_MVC.Controllers
 
                 };
 
+            if(masterView.Status == null)
+            {
+                masterView.Status = "PENDING";
+            }
                 // return View(obj);
 
                 return View(masterView);
@@ -139,25 +148,24 @@ namespace ART_MVC.Controllers
             public async Task<IActionResult> Details(int id)
             {
                 MasterViewModel masterViewModel = new();
+                ProjectViewModel projectViewModel= new();
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     var result = await client.GetAsync($"MasterBR/GetMasterBRById/{id}");
-                    if (result.IsSuccessStatusCode)
+
+                if (result.IsSuccessStatusCode)
                     {
                         masterViewModel = await result.Content.ReadAsAsync<MasterViewModel>();
-                        // var cityNameResult = await client.GetAsync($"Cities/GetcityById/{house.CityId}");
+                    var project = await client.GetAsync($"ProjectsBR/GetProjectBRById/{masterViewModel.ProjectId}");
+                    projectViewModel = await project.Content.ReadAsAsync<ProjectViewModel>();
+                    masterViewModel.ProjectName = projectViewModel.ProjectName;
 
-                        // var cityName = await cityNameResult.Content.ReadAsAsync<CityViewModel>();
-
-                        // house.CityName = cityName.CityName;
-                    }
-
-                    /*  house.HouseId = id;
-                      string houseId = id.ToString();
-                      HttpContext.Session.SetString("houseId", houseId);
-      */
                 }
+
+
+            }
+
                 return View(masterViewModel);
             }
 
@@ -208,6 +216,8 @@ namespace ART_MVC.Controllers
                 {
                     using (var client = new HttpClient())
                     {
+
+
                         // client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                         client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                         var result = await client.PutAsJsonAsync($"MasterBR/UpdateMasterBR/{masterViewModel.Id}", masterViewModel);

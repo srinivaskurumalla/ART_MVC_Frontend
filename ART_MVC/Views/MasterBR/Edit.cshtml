@@ -134,6 +134,13 @@
                         <input type="text" asp-for="Manager_Eval_Result" placeholder="Enter Manager Evaluation Result" class="form-control" />
                         <span asp-validation-for="Manager_Eval_Result" class="text-bg-danger"></span>
                     </div>
+
+                    <div class="form-group">
+                        <label asp-for="Eval_Comments"> Evaluation Comments</label>
+                            <textarea asp-for="Eval_Comments" class="form-control" rows="5" placeholder="Enter Evaluation Comments"></textarea>
+                                           
+                        <span asp-validation-for="Eval_Comments" class="text-bg-danger"></span>
+                    </div>
                     <div class="form-group">
                        
                             <label asp-for="Status">Status</label>

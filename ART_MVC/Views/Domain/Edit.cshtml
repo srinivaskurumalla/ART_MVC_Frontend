@@ -17,25 +17,7 @@
                     <input type="hidden" asp-for="@Model.ProjectFkId" />
                     <input type="hidden" asp-for="@Model.EmployeeId" />
                     <input type="hidden" asp-for="@Model.Age" />
-                    @*                        <input type="hidden" asp-for="UserDetailsId" />
-                    *@
-                 @*   <input type="hidden" asp-for="EmployeeId" />
-                    <input type="hidden" asp-for="ProjectFkId" />
-                    <input type="hidden" asp-for="ProjectName" />
-
-*@
-                    @*   <div class="form-group">
-                        <label asp-for="ProjectId" class="form-label">Project Name</label>
-                        <br />
-                        <select asp-for="ProjectId" class="dropdown btn btn-outline-dark">
-                            <option value="">--Select--</option>
-                            @foreach (var project in Model.ProjectViewModels)
-                            {
-                                <option value="@project.Id">@project.ProjectName</option>
-                            }
-                        </select>
-                        <span asp-validation-for="ProjectId"></span>
-                    </div>*@
+                  
                     <div class="form-group">
                         <label asp-for="DomainName">Domain Name</label>
                         <input type="text" asp-for="DomainName" placeholder="Enter Name" class="form-control" />
@@ -48,61 +30,31 @@
                         <span asp-validation-for="SkillSetRequired" class="text-bg-danger"></span>
 
                     </div>
-                    @*  <div class="form-group">
-                    <label asp-for="CityId">City</label>
-                    <input type="text" asp-for="CityId" placeholder="City Id" class="form-control" />
-                    <span asp-validation-for="CityId" class="text-bg-danger"></span>
-
-                    </div>*@
-
-
-                    @* testing of city and states*@
-                    @*  <label for="states">States:</label>
-                    <select id="states" class="form-control">
-                    <option value="">--Select State--</option>
-                    @foreach (var state in Model.StateViewModels.Distinct())
-                    {
-                    <option value="@state.Id">@state.StateName</option>
-                    }
-                    </select>
-                    <label for="cities">Cities:</label>
-                    <select id="cities" name="cityId" class="form-control"></select>
-                    *@
-                    @*  <div class="form-group">
-                    <label for="cities">Cities:</label>
-                    <select id="cities" class="form-control" disabled="disabled">
-                    <option value="">--Select City--</option>
-                    </select>
-                    </div>*@
-
-                    @*  <label asp-for="CityId">City</label>
-                    <select id="genre-dropdown" name="cityId" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
-                    <option value="">--Select--</option>
-                    @foreach (var city in Model.CityViewModels.Distinct())
-                    {
-                    <option value="@city.Id">@city.CityName</option>
-                    }
-                    </select>*@
+                  
 
                     <div class="form-group">
-                        <label asp-for="Grade">Location</label>
-                        <input type="text" asp-for="Grade" placeholder="Enter grade" class="form-control" />
-                        <span asp-validation-for="Grade" class="text-bg-danger"></span>
-                    </div>
+                        <label asp-for="Status">Status</label>
+                        <select asp-for="Status" class="dropdown btn btn-outline-dark w-100">
+                            <option value="">--Select--</option>
+                            <option value="OPEN">OPEN</option>
+                            <option value="HOLD">HOLD</option>
+                            <option value="CLOSED">CLOSED</option>
+                            <option value="CANCELLED">CANCELLED</option>
 
-                    <div class="form-group">
-                        <label asp-for="Status">Source</label>
-                        <input type="text" asp-for="Status" placeholder="Enter status" class="form-control" />
+                        </select>             
                         <span asp-validation-for="Status" class="text-bg-danger"></span>
                     </div>
-                    @*  <div class="mb-2">
-                    <label asp-for="UploadDate" class="form-label"></label>
-                    <input type="date" asp-for="UploadDate" class="form-control" />
-                    <span asp-validation-for="UploadDate"></span>
-                    </div>*@
+                  
                     <div class="form-group">
                         <label asp-for="Grade">Grade</label>
-                        <input type="text" asp-for="Grade" placeholder="Enter Grade" class="form-control" />
+                        <select asp-for="Grade" class="dropdown btn btn-outline-dark w-100">
+                            <option value="">--Select--</option>
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+
+                        </select>         
                         <span asp-validation-for="Grade" class="text-bg-danger"></span>
                     </div>
                     <div class="form-group">

@@ -26,6 +26,9 @@
             <th>Client Eval Result</th>
             <th style="width:110px">Manager Eval Date</th>
             <th>Manager Eval Result</th>
+            <th>Target BR</th>
+            <th>Evaluation Comments</th>
+
             <th>Status</th>
            
         </tr>
@@ -46,6 +49,10 @@
             <td>@Model.Client_Eval_Result</td>
             <td>@Model.Manager_Eval_Date?.ToShortDateString()</td>
             <td>@Model.Manager_Eval_Result</td>
+           
+           
+            <td>@Model.ProjectName</td>
+            <td>@Model.Eval_Comments</td>
             <td>@Model.Status</td>
         </tr>
 

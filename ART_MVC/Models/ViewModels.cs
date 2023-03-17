@@ -11,7 +11,7 @@ namespace ART_MVC.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Please Select Project")]
-        public string ProjectId { get; set; }
+        public int ProjectId { get; set; }
         public string CandidateId { get; set; }
         //  public ProjectsBRModel ProjectsBRModel { get; set; }
         /*  public int AccountsBRModelId { get; set; }
@@ -55,6 +55,8 @@ namespace ART_MVC.Models
         public string Status { get; set; }
         public string Eval_Comments { get; set; }
 
+        public string ProjectName { get; set; }
+
         public List<ProjectViewModel> ProjectViewModels { get; set; }
 
     }
@@ -77,6 +79,8 @@ namespace ART_MVC.Models
          public int AccountId { get; set; }
          public AccountsBRModel AccountsBRModel { get; set; }
  */
+        public DateTime? ApproveDate { get; set; }
+        public int Age { get; set; }
 
         [JsonProperty("AccountViewModel")]
         public AccountViewModel AccountViewModel { get; set; }
@@ -145,6 +149,7 @@ namespace ART_MVC.Models
     {
       public  List<ProjectViewModel> projectViewModels { get; set; }
       public  List<SignUpViewModel> SignUpViewModels { get; set; }
+      public  List<DomainViewModel> DomainsViewModels { get; set; }
        public List<AccountViewModel> accountViewModels
         {
             get; set;
@@ -157,6 +162,11 @@ namespace ART_MVC.Models
 
     }
 
+    public class Master_Project_Dto
+    {
+        public List<ProjectViewModel> ProjectViewModels { get; set; }
+        public List<MasterViewModel> MasterViewModels { get; set; }
+    }
 
     public class SignUpViewModel
     {

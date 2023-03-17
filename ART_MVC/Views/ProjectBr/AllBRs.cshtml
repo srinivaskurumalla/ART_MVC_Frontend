@@ -2,16 +2,20 @@
 @{
     ViewData["Title"] = "AllBRs";
     var flag = true;
+    var Open = 0;
+    var Closed = 0;
+    var Cancelled = 0;
+    var Hold = 0;
 }
 <head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
 
-<style>
-    .dataTables_scrollHead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    }
+    <style>
+        .dataTables_scrollHead {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
     </style>
 
 </head>
@@ -22,31 +26,6 @@
     <div class="col-md-8 mt-4">
         <form asp-controller="ProjectBr" asp-action="AllBRs" method="post" class="mb-5">
             <div class="row">
-                @*<div class="form-group">
-                    <label asp-for="Status" class="form-label">Select Status:</label>
-                    <select name="status" asp-for="Status" asp-items="Model.Values" onchange="this.form.submit()" class="dropdown btn btn-outline-dark">
-                        <option value="">--Select--</option>
-                      
-
-                    </select>
-                </div>*@
-
-              @*  <div class="form-group">
-                            <label asp-for="ProjectId" class="form-label">Project Name</label>
-                           
-                            <select name="projectId" asp-for="ProjectId" class="dropdown btn btn-outline-dark">
-                                <option value="">--Select--</option>
-                            @foreach (var project in Model.projectViewModels)
-                            {
-                                <option value="@project.ProjectId">@project.ProjectName</option>
-                            }
-                            </select>
-                            <span asp-validation-for="ProjectId"></span>
-                        </div>*@
-              @*  <div class="col-2">
-                    <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
-
-                </div>*@
             </div>
         </form>
 
@@ -55,12 +34,10 @@
 
             <div class="col-2">
 
-                <a asp-controller="Home" asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
+                <a asp-controller="Home" asp-action="Navigate" class="text-start btn btn-warning">Go to HomePage</a>
 
             </div>
-          @*  <div class="col-8">
-                <a style="width:auto;margin-left:auto" asp-controller="ProjectBr" asp-action="Create" class="btn btn-dark " style="margin-left:100%">Add new ProjectBR</a>
-            </div>*@
+
         </div>
         <table id="tblAllBRs" class="table table-hover shadow">
             <thead class="bg-info">
@@ -70,13 +47,11 @@
                     <th>Project Name</th>
                     <th>Project Id</th>
                     <th>Total Candidates Required</th>
-                    <th>Added By</th>
-                   @* <th>Approved Date</th>
-                    <th>Grade</th>
-                    <th>SkillSet Required</th>
-                    <th>Positions Required</th>
-                    <th>Status</th>*@
-                  @*  <th>Action</th>*@
+                    <th>Approve Date</th>
+                    <th>Age</th>
+                    <th>Status</th>
+                   @* <th>Added By</th>
+*@
                 </tr>
             </thead>
             <tbody>
@@ -96,28 +71,57 @@
                                 <td>@item.AccountName</td>
                                 <td>@project.ProjectName</td>
                                 <td>@project.ProjectId</td>
-@*                                <td> <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">@project.ProjectId</a> </td>
-*@                                <td>@project.Total_Positions</td>
-                                @foreach(var emp in Model.SignUpViewModels)
+                                @*                                <td> <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">@project.ProjectId</a> </td>
+                    *@
+                                <td>@project.Total_Positions</td>
+
+                                <td>@project.ApproveDate?.ToShortDateString()</td>
+                                <td>@project.Age</td>
+                                @if (true)
                                 {
-                                    @if(project.EmployeeId == emp.Id)
+                                    Open = 0;
+                                    Closed = 0;
+                                    Cancelled = 0;
+                                    Hold = 0;
+                                }
+                                @foreach (var domain in Model.DomainsViewModels)
+                                {
+                                    @if (project.Id == domain.ProjectFkId)
+                                    {
+                                        @if (domain.Status == "OPEN")
+                                        {
+                                            Open += 1;
+                                        }
+                                        else if (domain.Status == "CLOSED")
+                                        {
+                                            Closed += 1;
+                                        }
+                                        else if (domain.Status == "HOLD")
+                                        {
+                                            Hold += 1;
+                                        }
+                                        else if (domain.Status == "CANCELLED")
+                                        {
+                                            Cancelled += 1;
+                                        }
+                                    }
+                                }
+                                <td>
+                                    OPEN : @Open <br>
+                                    CLOSED : @Closed <br>
+                                    HOLD : @Hold <br>
+                                    CANCELLED : @Cancelled
+                                </td>
+
+
+                              @*  @foreach (var emp in Model.SignUpViewModels)
+                                {
+                                    @if (project.EmployeeId == emp.Id)
                                     {
                                         <td>@emp.Name</td>
                                     }
-                                }
-                                @*<td>@item.</td>*@
-                               @* <td>@project.ApprovedDate.ToShortDateString()</td>*@
-                              @*  <td>@project.Grade</td>
-                                 <td>@item.AccountViewModel.AccountName</td>
-                                <td>@project.SkillSetRequired</td>
-                                <td>@project.No_Of_Positions</td>
+                                }*@
 
-                                <td>@project.Status</td>*@
-                               @* <td>
-                                    <a asp-controller="ProjectBr" asp-action="Details" asp-route-id="@project.Id">Details</a> |
-                                    <a asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@project.Id">Customize</a> |
-                                    <a asp-controller="ProjectBr" asp-action="Delete" asp-route-id="@project.Id">Delete</a>
-                                </td>*@
 
                             </tr>
                         }
@@ -139,13 +143,13 @@
 
     <script>
         $(document).ready(function ($) {
-           $(document).ready(function ($) {
+            $(document).ready(function ($) {
                 $('#tblAllBRs').DataTable({
-                    fixedHeader : true
+                    fixedHeader: true
                 });
-           
 
-           
+
+
             });
         });
     </script>

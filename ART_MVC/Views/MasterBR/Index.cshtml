@@ -1,4 +1,4 @@
-﻿@model List<MasterViewModel>
+﻿@model Master_Project_Dto
 @using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
@@ -16,13 +16,13 @@
 
     <div class="col-md-2"></div>
     <div class="col-md-8 mt-4">
-        <a asp-controller="Home" asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
+        <a asp-controller="Home" asp-action="Navigate" class="text-start btn btn-warning">Go to HomePage</a>
 
         <div class="row">
             <div class="col">
                 <div class="col text-end">
                 </div>
-                <h3 class="mt-4">Master BR Page</h3>
+                <h3 class="mt-4">Evaluation Page</h3>
             </div>
             @if (empEmail != null)
             {
@@ -39,6 +39,7 @@
                     <tr>
                         <th>Candidate Id</th>
                         <th>Candidate Name</th>
+                        <th>Target BR</th>
                         <th>Internal/External</th>
                         <th>Status</th>
                         <th>Location</th>
@@ -50,32 +51,68 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Count <= 0)
+                    @if (Model.MasterViewModels.Count <= 0)
                     {
                         flag = false;
                     }
-                    @foreach (var item in Model)
+                    else
                     {
 
 
-                        <tr>
-                            <td>@item.CandidateId</td>
-                            <td>@item.CandidateName</td>
-                            <td>@item.Int_Ext</td>
-                            <td>@item.Status</td>
-                            <td>@item.Location</td>
-                            @if (empEmail != null)
-                            {
+                        foreach (var item in Model.MasterViewModels)
+                        {
 
-                                <td>
-                                    <a asp-controller="MasterBR" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-controller="MasterBR" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
-                                    <a asp-controller="MasterBR" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
-                            }
 
-                        </tr>
+                            <tr>
+                                <td>@item.CandidateId</td>
+                                <td>@item.CandidateName</td>
 
+                                @foreach(var proj in Model.ProjectViewModels)
+                                {
+                                    @if(proj.Id == item.ProjectId)
+                                    {
+                                        <td>@proj.ProjectName</td>
+                                    }
+                                }
+                               
+                                <td>@item.Int_Ext</td>
+
+                                @if (item.Status == "SELECTED")
+                                {
+                                    <td class="text-success"><strong> @item.Status</strong></td>
+                                }
+                                else if (item.Status == "REJECTED")
+                                {
+                                    <td class="text-danger"><strong>@item.Status</strong></td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <strong>
+
+                                    @item.Status
+
+                                    </strong>
+
+                                    </td>
+                                }
+
+
+                               @* <td>@item.Status</td>*@
+                                <td>@item.Location</td>
+                                @if (empEmail != null)
+                                {
+
+                                    <td>
+                                        <a asp-controller="MasterBR" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-controller="MasterBR" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
+                                        <a asp-controller="MasterBR" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                }
+
+                            </tr>
+
+                        }
                     }
                 </tbody>
             </table>

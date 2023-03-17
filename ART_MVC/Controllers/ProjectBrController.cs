@@ -53,26 +53,12 @@ namespace ART_MVC.Controllers
 
 
                 }
-                /*  signUpViewModel = await loggedInEmp.Content.ReadAsAsync<SignUpViewModel>();
-
-                  if (signUpViewModel == null)
-                  {
-                      return RedirectToAction("Index", "Error");
-                  }*/
-                // projectViewModels = projectViewModels.Where(p => p.EmployeeId == signUpViewModel.Id).ToList();
                 proj_Acc_Dto.projectViewModels = projectViewModels;
                 proj_Acc_Dto.accountViewModels = accountViewModels;
                 proj_Acc_Dto.SignUpViewModels = signUpViewModels;
+                proj_Acc_Dto.DomainsViewModels = domainViewModels;
 
-               /* if (result.IsSuccessStatusCode && status != "All")
-                {
-                    proj_Acc_Dto.projectViewModels =  projectViewModels.Where(p => p.ProjectId == projectId).ToList();
-                    if(status != null)
-                    {
-                       // proj_Acc_Dto.projectViewModels = projectViewModels.Where(p => p.Status == status).ToList();
-
-                    }
-                }*/
+              
             }
 
             Proj_Acc_Dto proj_Acc_Dto1 = new Proj_Acc_Dto
@@ -80,6 +66,7 @@ namespace ART_MVC.Controllers
                 accountViewModels = proj_Acc_Dto.accountViewModels,
                 projectViewModels = proj_Acc_Dto.projectViewModels,
                 SignUpViewModels=proj_Acc_Dto.SignUpViewModels,
+                DomainsViewModels=proj_Acc_Dto.DomainsViewModels,
 
 
               //  ProjectId = projectId,

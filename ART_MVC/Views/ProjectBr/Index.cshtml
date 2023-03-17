@@ -18,7 +18,7 @@
            
             <div class="col-2">
              
-                <a asp-controller="Home" asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
+                <a asp-controller="Home" asp-action="Navigate" class="text-start btn btn-warning">Go to HomePage</a>
 
             </div>
             <div class="col-8" >
@@ -33,7 +33,8 @@
                         <th>Project Name</th>
                         <th>Project Id</th>
                         <th>Total Positions required</th>
-                        
+                        <th>Approve Date</th>
+                        <th>Age</th>
                         <th >Action </th>
                     </tr>
                 </thead>
@@ -65,6 +66,8 @@
 
                                     <td>@project.Status</td>*@
                                     <td>@project.Total_Positions</td>
+                                    <td>@project.ApproveDate?.ToShortDateString()</td>
+                                    <td>@project.Age</td>
                                    <td>
                                         <div>
                                             <a asp-controller="ProjectBr" asp-action="Edit" asp-route-id="@project.Id">Customize</a> |          
